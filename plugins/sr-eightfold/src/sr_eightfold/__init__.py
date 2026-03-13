@@ -30,6 +30,7 @@ from narrowfield import (
     PluginInfo,
     PluginError,
     SkillDefinition,
+    ConfigField,
 )
 
 log = logging.getLogger("sr_eightfold")
@@ -55,6 +56,22 @@ class Plugin:
     Uses the internal CareerHub web API with browser cookies (no admin access
     required), or the official Eightfold API v2 with OAuth/Bearer tokens.
     """
+
+    CONFIG_SCHEMA = [
+        ConfigField(name="base_url", type="url", default="https://careerhub.microsoft.com", description="CareerHub base URL"),
+        ConfigField(name="domain", type="string", default="microsoft.eightfold.ai", description="Eightfold AI domain"),
+        ConfigField(name="auth_mode", type="select", default="cookie", options=["cookie", "oauth", "bearer"], description="Authentication mode"),
+        ConfigField(name="session_cookie", type="password", description="Browser session cookie value"),
+        ConfigField(name="remember_token", type="password", description="Browser remember_token cookie value"),
+        ConfigField(name="oauth_username", type="string", description="Eightfold API OAuth username"),
+        ConfigField(name="oauth_password", type="password", description="Eightfold API OAuth password"),
+        ConfigField(name="region", type="select", default="us", options=["us", "eu"], description="Eightfold region"),
+        ConfigField(name="bearer_token", type="password", description="Bearer token for API auth"),
+        ConfigField(name="enrich_profiles", type="boolean", default=True, description="Fetch full profile details"),
+        ConfigField(name="download_resumes", type="boolean", default=True, description="Download candidate resumes"),
+        ConfigField(name="feedback_status", type="string", default="REQUESTED", description="Filter candidates by feedback status"),
+        ConfigField(name="timeout", type="number", default=30, description="Request timeout in seconds"),
+    ]
 
     def __init__(self) -> None:
         self.base_url: str = _DEFAULT_BASE_URL

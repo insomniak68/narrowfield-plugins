@@ -87,6 +87,45 @@ plugins:
 
 Or drop the plugin directory into SR's `plugins/` folder for auto-discovery.
 
+## Plugin Manifest
+
+This repository includes a `plugins.json` manifest at the root that Narrowfield's Plugin Store reads to discover available plugins. The manifest format:
+
+```json
+[
+  {
+    "name": "sr-example",
+    "display_name": "Example Plugin",
+    "version": "0.1.0",
+    "description": "What this plugin does",
+    "type": "source",
+    "package_path": "plugins/sr-example",
+    "capabilities": ["source:jobs", "source:candidates"]
+  }
+]
+```
+
+When hosting your own plugin store, place `plugins.json` at the repository root. Narrowfield will fall back to GitHub API directory listing if no manifest is found.
+
+## CONFIG_SCHEMA
+
+Plugins declare their configuration fields via a `CONFIG_SCHEMA` class attribute. This enables Narrowfield's UI to render a dynamic configuration form for each plugin.
+
+```python
+from narrowfield import ConfigField
+
+class Plugin:
+    CONFIG_SCHEMA = [
+        ConfigField(name="base_url", type="url", required=True, description="API base URL"),
+        ConfigField(name="api_key", type="password", description="API authentication key"),
+        ConfigField(name="timeout", type="number", default=30, description="Request timeout"),
+        ConfigField(name="region", type="select", default="us", options=["us", "eu"]),
+        ConfigField(name="enabled", type="boolean", default=True),
+    ]
+```
+
+Supported field types: `string`, `password`, `url`, `number`, `boolean`, `select`.
+
 ## Writing Your Own Plugin
 
 1. `pip install narrowfield-sdk`

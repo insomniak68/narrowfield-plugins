@@ -12,6 +12,7 @@ from narrowfield import (
     JobImport,
     PluginInfo,
     SkillDefinition,
+    ConfigField,
 )
 
 
@@ -37,6 +38,19 @@ class Plugin:
     Supports bearer-token, API-key, and basic authentication, configurable
     endpoints and field mapping, and simple pagination.
     """
+
+    CONFIG_SCHEMA = [
+        ConfigField(name="base_url", type="url", required=True, description="Base URL of the API"),
+        ConfigField(name="auth_type", type="select", default="none", options=["none", "bearer", "api_key", "basic"], description="Authentication method"),
+        ConfigField(name="auth_token", type="password", description="Bearer token or API key"),
+        ConfigField(name="auth_header_name", type="string", default="Authorization", description="Header name for auth token"),
+        ConfigField(name="username", type="string", description="Username for basic auth"),
+        ConfigField(name="password", type="password", description="Password for basic auth"),
+        ConfigField(name="candidates_endpoint", type="string", default="/candidates", description="Candidates API path"),
+        ConfigField(name="jobs_endpoint", type="string", default="/jobs", description="Jobs API path"),
+        ConfigField(name="per_page", type="number", default=100, description="Results per page"),
+        ConfigField(name="timeout", type="number", default=30, description="Request timeout in seconds"),
+    ]
 
     def __init__(self) -> None:
         self.base_url: str = ""

@@ -9,11 +9,18 @@ import httpx
 from narrowfield import (
     PluginInfo,
     ScreeningDecision,
+    ConfigField,
 )
 
 
 class Plugin:
     """Send screening decisions to a webhook endpoint."""
+
+    CONFIG_SCHEMA = [
+        ConfigField(name="url", type="url", required=True, description="Webhook endpoint URL"),
+        ConfigField(name="auth_header", type="password", description="Authorization header value (e.g. 'Bearer xxx')"),
+        ConfigField(name="timeout", type="number", default=10, description="Request timeout in seconds"),
+    ]
 
     def __init__(self):
         self.url: str = ""

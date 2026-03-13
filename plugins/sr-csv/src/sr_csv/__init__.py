@@ -9,11 +9,17 @@ from narrowfield import (
     JobImport,
     CandidateImport,
     SkillDefinition,
+    ConfigField,
 )
 
 
 class Plugin:
     """Import jobs and candidates from local CSV files."""
+
+    CONFIG_SCHEMA = [
+        ConfigField(name="jobs_path", type="string", description="Path to jobs CSV file"),
+        ConfigField(name="candidates_path", type="string", description="Path to candidates CSV file"),
+    ]
 
     def __init__(self):
         self.jobs_path: str = ""

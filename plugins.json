@@ -1,0 +1,38 @@
+[
+  {
+    "name": "sr-api",
+    "display_name": "REST API Import",
+    "version": "0.1.0",
+    "description": "Import candidates and jobs from any REST API with configurable authentication and field mapping.",
+    "type": "source",
+    "package_path": "plugins/sr-api",
+    "capabilities": ["source:jobs", "source:candidates"]
+  },
+  {
+    "name": "sr-csv",
+    "display_name": "CSV Import",
+    "version": "0.1.0",
+    "description": "Import jobs and candidates from local CSV files.",
+    "type": "source",
+    "package_path": "plugins/sr-csv",
+    "capabilities": ["source:jobs", "source:candidates"]
+  },
+  {
+    "name": "sr-eightfold",
+    "display_name": "Eightfold AI / CareerHub",
+    "version": "0.1.5",
+    "description": "Fetch positions and applicants from Eightfold AI (CareerHub) with cookie, OAuth, or bearer auth.",
+    "type": "source",
+    "package_path": "plugins/sr-eightfold",
+    "capabilities": ["source:jobs", "source:candidates"]
+  },
+  {
+    "name": "sr-webhook",
+    "display_name": "Webhook",
+    "version": "0.1.0",
+    "description": "POST screening decisions to any webhook URL.",
+    "type": "sink",
+    "package_path": "plugins/sr-webhook",
+    "capabilities": ["sink:decisions"]
+  }
+]
